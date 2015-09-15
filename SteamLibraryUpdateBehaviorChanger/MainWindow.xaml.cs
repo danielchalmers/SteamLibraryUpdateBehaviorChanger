@@ -23,6 +23,14 @@ namespace SteamLibraryUpdateBehaviorChanger
         public MainWindow()
         {
             InitializeComponent();
+
+            if (!SteamClientHelper.DoesSteamConfigExist())
+            {
+                MessageBox.Show($"Cannot find Steam config path at \"{SteamClientHelper.GetSteamConfigPath()}\".{Environment.NewLine}{Environment.NewLine}Application will now exit.");
+                Application.Current.Shutdown();
+                return;
+            }
+
             comboBox.ItemsSource = new List<string> { "Always keep this game up to date", "Only update this game when I launch it", "Always auto-update this game before others" };
         }
     }

@@ -27,9 +27,10 @@ namespace SteamLibraryUpdateBehaviorChanger
 
         public static IEnumerable<string> GetAllLibraries()
         {
-            return
-                VDFHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
-                    .Select(libraryPath => libraryPath.Value);
+            yield return GetSteamPath();
+            foreach (var library in VDFHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
+                .Select(libraryPath => libraryPath.Value))
+                yield return library;
         }
 
         public static IEnumerable<string> GetAllGames(string libraryPath)

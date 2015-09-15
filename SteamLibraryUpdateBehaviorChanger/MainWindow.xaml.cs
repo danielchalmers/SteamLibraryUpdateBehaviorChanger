@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,8 @@ namespace SteamLibraryUpdateBehaviorChanger
             }
 
             comboBox.ItemsSource = new List<string> { "Always keep this game up to date", "Only update this game when I launch it", "Always auto-update this game before others" };
+            listBox.ItemsSource = SteamClientHelper.GetAllLibraries();
+            listBox.SelectAll();
         }
     }
 }

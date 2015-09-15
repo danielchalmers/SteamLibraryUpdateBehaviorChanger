@@ -23,5 +23,15 @@ namespace SteamLibraryUpdateBehaviorChanger
         {
             return File.Exists(GetSteamConfigPath());
         }
+
+        public static IEnumerable<string> GetAllLibraries()
+        {
+            return VDFHelper.GetKeyPair(File.ReadAllLines(SteamClientHelper.GetSteamConfigPath()), "BaseInstallFolder_").Select(libraryPath => libraryPath.Value);
+        }
+
+        public static IEnumerable<string> GetAllGames(string libraryPath)
+        {
+            return Directory.GetFiles(libraryPath);
+        }
     }
 }

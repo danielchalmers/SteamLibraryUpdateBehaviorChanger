@@ -23,6 +23,7 @@ namespace SteamLibraryUpdateBehaviorChanger
         public MainWindow()
         {
             InitializeComponent();
+            comboBox.ItemsSource = new List<string> { "Always keep this game up to date", "Only update this game when I launch it", "Always auto-update this game before others" };
         }
     }
 }

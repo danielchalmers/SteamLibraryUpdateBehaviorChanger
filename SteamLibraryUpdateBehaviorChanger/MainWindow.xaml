@@ -23,7 +23,7 @@
         <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBox" SelectionMode="Multiple"/>
         <ComboBox Grid.Column="0" Grid.Row="2" x:Name="comboBox" HorizontalAlignment="Stretch"/>
         <ListBox Grid.Column="2" Grid.Row="0" x:Name="listBox1"/>
-        <Button Grid.Column="2" Grid.Row="2" x:Name="button" HorizontalAlignment="Right" Content="Apply" Width="75" IsEnabled="{Binding SelectedIndex, ElementName=comboBox, Converter={StaticResource SelectedIndexToEnabled}}"/>
+        <Button Grid.Column="2" Grid.Row="2" x:Name="button" HorizontalAlignment="Right" Click="btnApply_Click" Content="Apply" Width="75" IsEnabled="{Binding SelectedIndex, ElementName=comboBox, Converter={StaticResource SelectedIndexToEnabled}}"/>
 
     </Grid>
 </Window>

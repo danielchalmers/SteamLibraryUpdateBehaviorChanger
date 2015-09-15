@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SteamLibraryUpdateBehaviorChanger
 {
@@ -32,9 +31,15 @@ namespace SteamLibraryUpdateBehaviorChanger
                 return;
             }
 
-            comboBox.ItemsSource = new List<string> { "Always keep this game up to date", "Only update this game when I launch it", "Always auto-update this game before others" };
+            comboBox.ItemsSource = SteamClientHelper.GetUpdateBehaviorChoices();
             listBox.ItemsSource = SteamClientHelper.GetAllLibraries();
             listBox.SelectAll();
+        }
+
+        private void btnApply_Click(object sender, RoutedEventArgs e)
+        {
+            SteamClientHelper.ApplyBehaviorChanges(listBox, listBox1, comboBox.SelectedIndex);
+            MessageBox.Show("Game update behavior change was successful.");
         }
     }
 }

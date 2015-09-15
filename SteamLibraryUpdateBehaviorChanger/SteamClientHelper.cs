@@ -11,8 +11,8 @@ namespace SteamLibraryUpdateBehaviorChanger
         public static string GetSteamPath()
         {
             return Environment.Is64BitOperatingSystem
-                ? "C:\\Program Files (x86)\\Steam\\"
-                : "C:\\Program Files\\Steam\\";
+                ? "C:\\Program Files (x86)\\Steam"
+                : "C:\\Program Files\\Steam";
         }
 
         public static string GetSteamConfigPath()
@@ -30,7 +30,7 @@ namespace SteamLibraryUpdateBehaviorChanger
             yield return GetSteamPath();
             foreach (var library in VDFHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
                 .Select(libraryPath => libraryPath.Value))
-                yield return library;
+                yield return library.Replace("\\\\", "\\");
         }
 
         public static IEnumerable<string> GetAllGames(string libraryPath)

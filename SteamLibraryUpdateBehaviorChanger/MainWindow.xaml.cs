@@ -20,6 +20,13 @@ namespace SteamLibraryUpdateBehaviorChanger
                 Application.Current.Shutdown();
                 return;
             }
+            if (SteamClientHelper.IsSteamRunning())
+            {
+                Popup.Show("Steam must be closed to use this tool. Close Steam and try again.",
+                    img: MessageBoxImage.Error);
+                Application.Current.Shutdown();
+                return;
+            }
 
             cbUpdateBehavior.ItemsSource = SteamClientHelper.GetUpdateBehaviorChoices();
             lsLibraries.ItemsSource = SteamClientHelper.GetAllLibraries();

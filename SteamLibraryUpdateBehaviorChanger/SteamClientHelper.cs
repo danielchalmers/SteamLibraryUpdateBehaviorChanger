@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
@@ -65,6 +66,11 @@ namespace SteamLibraryUpdateBehaviorChanger
                         lsLog.Items.Add(name.Value);
                 }
             }
+        }
+
+        public static bool IsSteamRunning()
+        {
+            return (Process.GetProcessesByName("Steam").Length > 0);
         }
     }
 }

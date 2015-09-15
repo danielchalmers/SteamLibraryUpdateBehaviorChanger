@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamLibraryUpdateBehaviorChanger"
+        xmlns:p="clr-namespace:SteamLibraryUpdateBehaviorChanger.Properties"
         mc:Ignorable="d"
-        Title="Steam Library Update Behavior Changer" Height="300" Width="500" WindowStartupLocation="CenterScreen"
+        Title="{x:Static p:Resources.AppName}" Height="300" Width="500" WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize">
     <Window.Resources>
         <local:SelectedIndexToEnabled x:Key="SelectedIndexToEnabled" />

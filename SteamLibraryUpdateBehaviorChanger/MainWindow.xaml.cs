@@ -14,8 +14,9 @@ namespace SteamLibraryUpdateBehaviorChanger
 
             if (!SteamClientHelper.DoesSteamConfigExist())
             {
-                MessageBox.Show(
-                    $"Cannot find Steam config path at \"{SteamClientHelper.GetSteamConfigPath()}\".{Environment.NewLine}{Environment.NewLine}Application will now exit.");
+                Popup.Show(
+                    $"Cannot find Steam config path at \"{SteamClientHelper.GetSteamConfigPath()}\".{Environment.NewLine}{Environment.NewLine}Application will now exit.",
+                    img: MessageBoxImage.Error);
                 Application.Current.Shutdown();
                 return;
             }
@@ -28,7 +29,7 @@ namespace SteamLibraryUpdateBehaviorChanger
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
             SteamClientHelper.ApplyBehaviorChanges(lsLibraries, lsLog, cbUpdateBehavior.SelectedIndex);
-            MessageBox.Show("Game update behavior change was successful.");
+            Popup.Show("Game update behavior change was successful.");
         }
     }
 }

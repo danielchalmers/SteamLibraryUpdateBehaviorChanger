@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using Microsoft.Win32;
 
 namespace SteamLibraryUpdateBehaviorChanger
 {
     internal class SteamClientHelper
     {
-        public static string GetSteamPath()
-        {
-            return Environment.Is64BitOperatingSystem
-                ? "C:\\Program Files (x86)\\Steam"
-                : "C:\\Program Files\\Steam";
-        }
-
         public static string GetSteamConfigPath()
         {
-            return Path.Combine(GetSteamPath(), "config\\config.vdf");
+            return Path.Combine(GetPathFromRegistry(), "config\\config.vdf");
         }
 
         public static bool DoesSteamConfigExist()
@@ -28,7 +21,7 @@ namespace SteamLibraryUpdateBehaviorChanger
 
         public static IEnumerable<string> GetAllLibraries()
         {
-            yield return GetSteamPath();
+            yield return GetPathFromRegistry();
             foreach (var library in VDFHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
                 .Select(libraryPath => libraryPath.Value))
                 yield return library.Replace("\\\\", "\\");
@@ -70,7 +63,22 @@ namespace SteamLibraryUpdateBehaviorChanger
 
         public static bool IsSteamRunning()
         {
-            return (Process.GetProcessesByName("Steam").Length > 0);
+            return Process.GetProcessesByName("Steam").Length > 0;
+        }
+
+        private static string GetPathFromRegistry()
+        {
+            string path;
+            try
+            {
+                using (var registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam"))
+                    path = registryKey?.GetValue("SteamExe").ToString();
+            }
+            catch
+            {
+                path = "";
+            }
+            return path;
         }
     }
 }

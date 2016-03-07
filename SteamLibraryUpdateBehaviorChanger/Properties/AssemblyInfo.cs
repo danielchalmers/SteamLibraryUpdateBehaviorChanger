@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Daniel Chalmers Software")]
 [assembly: AssemblyProduct("SteamLibraryUpdateBehaviorChanger")]
-[assembly: AssemblyCopyright("© Daniel Chalmers 2015")]
+[assembly: AssemblyCopyright("© Daniel Chalmers 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

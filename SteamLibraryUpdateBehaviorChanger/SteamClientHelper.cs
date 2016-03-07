@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace SteamLibraryUpdateBehaviorChanger
 {
-    internal class SteamClientHelper
+    internal static class SteamClientHelper
     {
         public static string GetSteamConfigPath()
         {
@@ -22,17 +22,17 @@ namespace SteamLibraryUpdateBehaviorChanger
         public static IEnumerable<string> GetAllLibraries()
         {
             yield return GetPathFromRegistry();
-            foreach (var library in VDFHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
+            foreach (var library in VdfHelper.GetKeyPairs(File.ReadAllLines(GetSteamConfigPath()), "BaseInstallFolder_")
                 .Select(libraryPath => libraryPath.Value))
-                yield return library.Replace("\\\\", "\\");
+                yield return Path.GetFullPath(library);
         }
 
-        public static IEnumerable<string> GetAllGames(string libraryPath)
+        private static IEnumerable<string> GetAllGames(string libraryPath)
         {
-            return Directory.GetFiles(Path.Combine(libraryPath, "steamapps\\"), "*.acf");
+            return Directory.GetFiles(Path.Combine(libraryPath, "steamapps"), "*.acf");
         }
 
-        public static IList<string> GetUpdateBehaviorChoices()
+        public static IEnumerable<string> GetUpdateBehaviorChoices()
         {
             return new List<string>
             {
@@ -50,9 +50,9 @@ namespace SteamLibraryUpdateBehaviorChanger
                 foreach (var game in GetAllGames(item.ToString()))
                 {
                     var gameText = File.ReadAllLines(game).ToList();
-                    var gameName = VDFHelper.GetKeyPairs(gameText, "name");
+                    var gameName = VdfHelper.GetKeyPairs(gameText, "name");
                     gameText =
-                        new List<string>(VDFHelper.SetKeyPair(gameText,
+                        new List<string>(VdfHelper.SetKeyPair(gameText,
                             new KeyValuePair<string, string>("AutoUpdateBehavior", updateChoice.ToString())));
                     File.WriteAllLines(game, gameText);
                     foreach (var name in gameName)
@@ -72,13 +72,13 @@ namespace SteamLibraryUpdateBehaviorChanger
             try
             {
                 using (var registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam"))
-                    path = registryKey?.GetValue("SteamExe").ToString();
+                    path = registryKey?.GetValue("SteamPath").ToString();
             }
             catch
             {
                 path = "";
             }
-            return path;
+            return string.IsNullOrWhiteSpace(path) ? path : Path.GetFullPath(path);
         }
     }
 }

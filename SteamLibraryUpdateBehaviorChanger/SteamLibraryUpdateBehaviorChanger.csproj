@@ -58,7 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Popup.cs" />
     <Compile Include="SteamClientHelper.cs" />
-    <Compile Include="VDFHelper.cs" />
+    <Compile Include="VdfHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

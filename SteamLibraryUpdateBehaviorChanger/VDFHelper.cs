@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace SteamLibraryUpdateBehaviorChanger
 {
-    internal class VDFHelper
+    internal static class VdfHelper
     {
-        public static IEnumerable<KeyValuePair<string, string>> GetKeyPairs(IList<string> data, string keyName)
+        public static IEnumerable<KeyValuePair<string, string>> GetKeyPairs(IEnumerable<string> data, string keyName)
         {
             return from line in data
                 where line.Contains(keyName)
@@ -14,7 +14,7 @@ namespace SteamLibraryUpdateBehaviorChanger
                 select new KeyValuePair<string, string>(output[1], output[3]);
         }
 
-        public static IList<string> SetKeyPair(IList<string> data, KeyValuePair<string, string> keyPair)
+        public static IEnumerable<string> SetKeyPair(IEnumerable<string> data, KeyValuePair<string, string> keyPair)
         {
             var newList = new List<string>();
             foreach (var line in data)

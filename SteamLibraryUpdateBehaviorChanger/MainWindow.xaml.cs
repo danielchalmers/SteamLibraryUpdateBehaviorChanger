@@ -20,13 +20,6 @@ namespace SteamLibraryUpdateBehaviorChanger
                 Application.Current.Shutdown();
                 return;
             }
-            if (SteamClientHelper.IsSteamRunning())
-            {
-                Popup.Show("Steam must be closed to use this tool. Close Steam and try again.",
-                    img: MessageBoxImage.Error);
-                Application.Current.Shutdown();
-                return;
-            }
 
             cbUpdateBehavior.ItemsSource = SteamClientHelper.GetUpdateBehaviorChoices();
             lsLibraries.ItemsSource = SteamClientHelper.GetAllLibraries();
@@ -35,8 +28,13 @@ namespace SteamLibraryUpdateBehaviorChanger
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
+            if (SteamClientHelper.IsSteamRunning() &&
+                Popup.Show(
+                    $"It is recommended to close Steam before applying changes.{Environment.NewLine}{Environment.NewLine}Do you want to continue anyway?",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                return;
             SteamClientHelper.ApplyBehaviorChanges(lsLibraries, lsLog, cbUpdateBehavior.SelectedIndex);
-            Popup.Show("Game update behavior change was successful.");
+            Popup.Show("Library update behavior change is complete.");
         }
     }
 }
